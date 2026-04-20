@@ -178,10 +178,16 @@ export class ExternalMovementTankDto {
 }
 
 export class ExternalOilMovementDto {
-  @ApiProperty({ example: 'REF-2024-0001' })
+  @ApiProperty({
+    description: 'operator_ref_no จาก trx_nm1_detail (nullable ได้)',
+    example: '012604190022',
+  })
   ref_code: string;
 
-  @ApiProperty({ example: 1 })
+  @ApiProperty({
+    description: 'trx_transaction_nm1_id — 1 movement = 1 txn = 1 tank',
+    example: 1314,
+  })
   movement_id: number;
 
   @ApiProperty({ type: () => [ExternalMovementTankDto] })
@@ -190,7 +196,8 @@ export class ExternalOilMovementDto {
 
 export class GetOilMovementRequestDto {
   @ApiProperty({
-    example: ['REF-2024-0001', 'REF-2024-0002'],
+    description: 'operator_ref_no ของ trx_nm1_detail ที่ต้องการดึง',
+    example: ['012604190022', '012604190023'],
     type: [String],
   })
   ref_code: string[];
