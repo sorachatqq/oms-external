@@ -139,6 +139,9 @@ export class ExternalBatchFlowMeterDto {
 
   @ApiProperty({ type: () => [ExternalBatchFlowMeterDetailDto], nullable: true })
   batch_detail: ExternalBatchFlowMeterDetailDto[] | null;
+
+  @ApiProperty({ type: () => ExternalBatchFlushLinesDto, nullable: true })
+  flush_lines: ExternalBatchFlushLinesDto | null;
 }
 
 export class ExternalBatchDto {
