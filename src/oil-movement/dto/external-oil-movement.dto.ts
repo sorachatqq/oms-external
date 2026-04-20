@@ -1,75 +1,75 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ExternalBatchATGDetailDto {
-  @ApiProperty({ example: 'BATCH-001' })
-  batch_no: string;
+  @ApiProperty({ example: 'BATCH-001', nullable: true })
+  batch_no?: string | null;
 
-  @ApiProperty({ example: '2024-01-15T08:00:00Z' })
-  before_recorded_at: string;
+  @ApiProperty({ example: '2024-01-15T08:00:00Z', nullable: true })
+  before_recorded_at: string | null;
 
-  @ApiProperty({ example: '2024-01-15T12:00:00Z' })
-  after_recorded_at: string;
+  @ApiProperty({ example: '2024-01-15T12:00:00Z', nullable: true })
+  after_recorded_at: string | null;
 
-  @ApiProperty({ example: 35.5 })
-  api_before: number;
+  @ApiProperty({ example: 35.5, nullable: true })
+  api_before: number | null;
 
-  @ApiProperty({ example: 35.2 })
-  api_after: number;
+  @ApiProperty({ example: 35.2, nullable: true })
+  api_after: number | null;
 
-  @ApiProperty({ example: 32.0 })
-  temp_before: number;
+  @ApiProperty({ example: 32.0, nullable: true })
+  temp_before: number | null;
 
-  @ApiProperty({ example: 31.8 })
-  temp_after: number;
+  @ApiProperty({ example: 31.8, nullable: true })
+  temp_after: number | null;
 
-  @ApiProperty({ example: 10.5 })
-  level_before_m: number;
+  @ApiProperty({ example: 10.5, nullable: true })
+  level_before_m: number | null;
 
-  @ApiProperty({ example: 8.2 })
-  level_after_m: number;
+  @ApiProperty({ example: 8.2, nullable: true })
+  level_after_m: number | null;
 
-  @ApiProperty({ example: 52500.0 })
-  system_volume_before_liter: number;
+  @ApiProperty({ example: 52500.0, nullable: true })
+  system_volume_before_liter: number | null;
 
-  @ApiProperty({ example: 41000.0 })
-  system_volume_after_liter: number;
+  @ApiProperty({ example: 41000.0, nullable: true })
+  system_volume_after_liter: number | null;
 
-  @ApiProperty({ example: 11500.0 })
-  system_volume_diff_liter: number;
+  @ApiProperty({ example: 11500.0, nullable: true })
+  system_volume_diff_liter: number | null;
 
-  @ApiProperty({ example: 52450.0 })
-  company_volume_before_liter: number;
+  @ApiProperty({ example: 52450.0, nullable: true })
+  company_volume_before_liter: number | null;
 
-  @ApiProperty({ example: 40950.0 })
-  company_volume_after_liter: number;
+  @ApiProperty({ example: 40950.0, nullable: true })
+  company_volume_after_liter: number | null;
 
-  @ApiProperty({ example: 11500.0 })
-  company_volume_diff_liter: number;
+  @ApiProperty({ example: 11500.0, nullable: true })
+  company_volume_diff_liter: number | null;
 
   @ApiProperty({ example: null, nullable: true })
   remark: string | null;
 }
 
 export class ExternalBatchFlushLinesDto {
-  @ApiProperty({ example: 1 })
-  tank_id: number;
+  @ApiProperty({ example: 1, nullable: true })
+  tank_id: number | null;
 
-  @ApiProperty({ example: 'TK-001' })
-  tank_code: string;
+  @ApiProperty({ example: 'TK-001', nullable: true })
+  tank_code: string | null;
 
-  @ApiProperty({ example: 150.0 })
-  qty_atg_liter: number;
+  @ApiProperty({ example: 150.0, nullable: true })
+  qty_atg_liter: number | null;
 
-  @ApiProperty({ example: 148.5 })
-  qty_flowmeter_liter: number;
+  @ApiProperty({ example: 148.5, nullable: true })
+  qty_flowmeter_liter: number | null;
 
-  @ApiProperty({ type: () => [ExternalBatchATGDetailDto] })
-  batch_detail: ExternalBatchATGDetailDto[];
+  @ApiProperty({ type: () => [ExternalBatchATGDetailDto], nullable: true })
+  batch_detail: ExternalBatchATGDetailDto[] | null;
 }
 
 export class ExternalBatchATGPrimaryDto {
-  @ApiProperty({ type: () => [ExternalBatchATGDetailDto] })
-  batch_detail: ExternalBatchATGDetailDto[];
+  @ApiProperty({ type: () => [ExternalBatchATGDetailDto], nullable: true })
+  batch_detail: ExternalBatchATGDetailDto[] | null;
 }
 
 export class ExternalBatchATGDto {
@@ -81,64 +81,64 @@ export class ExternalBatchATGDto {
 }
 
 export class ExternalBatchFlowMeterDetailDto {
-  @ApiProperty({ example: 'BATCH-001' })
-  batch_no: string;
+  @ApiProperty({ example: 'BATCH-001', nullable: true })
+  batch_no?: string | null;
 
-  @ApiProperty({ example: '2024-01-15T08:00:00Z' })
-  before_recorded_at: string;
+  @ApiProperty({ example: '2024-01-15T08:00:00Z', nullable: true })
+  before_recorded_at: string | null;
 
-  @ApiProperty({ example: '2024-01-15T12:00:00Z' })
-  after_recorded_at: string;
+  @ApiProperty({ example: '2024-01-15T12:00:00Z', nullable: true })
+  after_recorded_at: string | null;
 
-  @ApiProperty({ example: 35.5 })
-  api_before: number;
+  @ApiProperty({ example: 35.5, nullable: true })
+  api_before: number | null;
 
-  @ApiProperty({ example: 35.2 })
-  api_after: number;
+  @ApiProperty({ example: 35.2, nullable: true })
+  api_after: number | null;
 
-  @ApiProperty({ example: 90.5 })
-  avg_temp_f: number;
+  @ApiProperty({ example: 90.5, nullable: true })
+  avg_temp_f: number | null;
 
-  @ApiProperty({ example: 0.9925 })
-  observed_temp_factor: number;
+  @ApiProperty({ example: 0.9925, nullable: true })
+  observed_temp_factor: number | null;
 
-  @ApiProperty({ example: 0.991 })
-  standard_temp_factor_86f: number;
+  @ApiProperty({ example: 0.991, nullable: true })
+  standard_temp_factor_86f: number | null;
 
-  @ApiProperty({ example: 100000 })
-  meter_before: number;
+  @ApiProperty({ example: 100000, nullable: true })
+  meter_before: number | null;
 
-  @ApiProperty({ example: 124980 })
-  meter_after: number;
+  @ApiProperty({ example: 124980, nullable: true })
+  meter_after: number | null;
 
-  @ApiProperty({ example: 1.00025 })
-  meter_factor: number;
+  @ApiProperty({ example: 1.00025, nullable: true })
+  meter_factor: number | null;
 
-  @ApiProperty({ example: 5 })
-  meter_factor_version_id: number;
+  @ApiProperty({ example: 5, nullable: true })
+  meter_factor_version_id: number | null;
 
-  @ApiProperty({ example: 24986.25 })
-  volume_raw_liters: number;
+  @ApiProperty({ example: 24986.25, nullable: true })
+  volume_raw_liters: number | null;
 
-  @ApiProperty({ example: 24780.0 })
-  volume_at_60f_liters: number;
+  @ApiProperty({ example: 24780.0, nullable: true })
+  volume_at_60f_liters: number | null;
 
-  @ApiProperty({ example: 24980.0 })
-  volume_industry_std_liters: number;
+  @ApiProperty({ example: 24980.0, nullable: true })
+  volume_industry_std_liters: number | null;
 
   @ApiProperty({ example: null, nullable: true })
   remark: string | null;
 }
 
 export class ExternalBatchFlowMeterDto {
-  @ApiProperty({ example: 'FM-001' })
-  flow_meter_code: string;
+  @ApiProperty({ example: 'FM-001', nullable: true })
+  flow_meter_code: string | null;
 
-  @ApiProperty({ example: 24980.0 })
-  summary_liters: number;
+  @ApiProperty({ example: 24980.0, nullable: true })
+  summary_liters: number | null;
 
-  @ApiProperty({ type: () => [ExternalBatchFlowMeterDetailDto] })
-  batch_detail: ExternalBatchFlowMeterDetailDto[];
+  @ApiProperty({ type: () => [ExternalBatchFlowMeterDetailDto], nullable: true })
+  batch_detail: ExternalBatchFlowMeterDetailDto[] | null;
 }
 
 export class ExternalBatchDto {
@@ -164,14 +164,14 @@ export class ExternalMovementTankDto {
   @ApiProperty({ type: () => ExternalMeasurementTypeDto })
   measurement_type: ExternalMeasurementTypeDto;
 
-  @ApiProperty({ example: 25000.5 })
-  qty_atg_liter: number;
+  @ApiProperty({ example: 25000.5, nullable: true })
+  qty_atg_liter: number | null;
 
-  @ApiProperty({ example: 24980.0 })
-  qty_flowmeter_liter: number;
+  @ApiProperty({ example: 24980.0, nullable: true })
+  qty_flowmeter_liter: number | null;
 
-  @ApiProperty({ example: true })
-  is_flush_lines: boolean;
+  @ApiProperty({ example: true, nullable: true })
+  is_flush_lines: boolean | null;
 
   @ApiProperty({ type: () => ExternalBatchDto })
   batch: ExternalBatchDto;
