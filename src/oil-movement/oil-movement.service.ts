@@ -60,7 +60,9 @@ export class OilMovementService {
           flow_meter: {
             ...tank.batch.flow_meter,
             flow_meter_code:
-              tank.batch.flow_meter.flow_meter_code?.trim().toUpperCase() ?? '',
+              tank.batch.flow_meter.flow_meter_code
+                ? tank.batch.flow_meter.flow_meter_code.trim().toUpperCase()
+                : null,
           },
         },
       })),
