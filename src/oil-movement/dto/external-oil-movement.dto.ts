@@ -16,6 +16,18 @@ export class ExternalBatchATGDetailDto {
   @ApiProperty({ example: 35.2, nullable: true })
   api_after: number | null;
 
+  @ApiProperty({ example: '2024-01-15T07:00:00Z', nullable: true })
+  open_tank_date_before: string | null;
+
+  @ApiProperty({ example: '2024-01-15T13:00:00Z', nullable: true })
+  open_tank_date_after: string | null;
+
+  @ApiProperty({ example: '2024-01-15T07:30:00Z', nullable: true })
+  open_dispense_date_before: string | null;
+
+  @ApiProperty({ example: '2024-01-15T12:30:00Z', nullable: true })
+  open_dispense_date_after: string | null;
+
   @ApiProperty({ example: 32.0, nullable: true })
   temp_before: number | null;
 
@@ -27,15 +39,6 @@ export class ExternalBatchATGDetailDto {
 
   @ApiProperty({ example: 8.2, nullable: true })
   level_after_m: number | null;
-
-  @ApiProperty({ example: 52500.0, nullable: true })
-  system_volume_before_liter: number | null;
-
-  @ApiProperty({ example: 41000.0, nullable: true })
-  system_volume_after_liter: number | null;
-
-  @ApiProperty({ example: 11500.0, nullable: true })
-  system_volume_diff_liter: number | null;
 
   @ApiProperty({ example: 52450.0, nullable: true })
   company_volume_before_liter: number | null;
@@ -89,6 +92,18 @@ export class ExternalBatchFlowMeterDetailDto {
 
   @ApiProperty({ example: '2024-01-15T12:00:00Z', nullable: true })
   after_recorded_at: string | null;
+
+  @ApiProperty({ example: '2024-01-15T07:00:00Z', nullable: true })
+  open_tank_date_before: string | null;
+
+  @ApiProperty({ example: '2024-01-15T13:00:00Z', nullable: true })
+  open_tank_date_after: string | null;
+
+  @ApiProperty({ example: '2024-01-15T07:30:00Z', nullable: true })
+  open_dispense_date_before: string | null;
+
+  @ApiProperty({ example: '2024-01-15T12:30:00Z', nullable: true })
+  open_dispense_date_after: string | null;
 
   @ApiProperty({ example: 35.5, nullable: true })
   api_before: number | null;
@@ -193,6 +208,13 @@ export class ExternalOilMovementDto {
   })
   movement_id: number;
 
+  @ApiProperty({
+    description: 'ประเภทการเคลื่อนไหว — IN = รับเข้า, OUT = จ่ายออก',
+    enum: ['IN', 'OUT'],
+    example: 'IN',
+  })
+  transaction_type: 'IN' | 'OUT';
+
   @ApiProperty({ type: () => [ExternalMovementTankDto] })
   movement_tank: ExternalMovementTankDto[];
 }
@@ -220,4 +242,45 @@ export class UpdateOilMovementResponseDto {
 
   @ApiProperty({ example: [{ ref_code: 'REF-2024-0001' }] })
   data: { ref_code: string }[];
+}
+
+// ─── Header-level DTOs ───────────────────────────────────────────────────────
+
+export class ExternalHeaderOilMovementDto {
+  @ApiProperty({
+    description: 'ref_document_id จาก trx_nm1_header',
+    example: 'NM1-2024-00001',
+  })
+  ref_document_id: string;
+
+  @ApiProperty({
+    description: 'รายการ movement ทั้งหมดภายใต้ header นี้',
+    type: () => [ExternalOilMovementDto],
+  })
+  movements: ExternalOilMovementDto[];
+}
+
+export class GetOilMovementByHeaderRequestDto {
+  @ApiProperty({
+    description: 'ref_document_id ของ trx_nm1_header ที่ต้องการดึง',
+    example: ['NM1-2024-00001'],
+    type: [String],
+  })
+  ref_code: string[];
+}
+
+export class GetOilMovementByHeaderResponseDto {
+  @ApiProperty({ enum: ['success', 'fail', 'error'] })
+  status: 'success' | 'fail' | 'error';
+
+  @ApiProperty({ type: () => [ExternalHeaderOilMovementDto] })
+  data: ExternalHeaderOilMovementDto[];
+}
+
+export class UpdateOilMovementByHeaderResponseDto {
+  @ApiProperty({ enum: ['success', 'fail', 'error'] })
+  status: 'success' | 'fail' | 'error';
+
+  @ApiProperty({ example: [{ ref_document_id: 'NM1-2024-00001' }] })
+  data: { ref_document_id: string }[];
 }
