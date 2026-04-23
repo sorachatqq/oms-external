@@ -38,7 +38,7 @@ export class OilMovementController {
     @Body() body: GetOilMovementByHeaderRequestDto,
   ) {
     return this.oilMovementService.getOilMovementsByHeader(
-      body.ref_code,
+      body.ref_document_id,
     );
   }
 

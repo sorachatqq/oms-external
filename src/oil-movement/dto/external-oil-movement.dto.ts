@@ -266,7 +266,7 @@ export class GetOilMovementByHeaderRequestDto {
     example: ['NM1-2024-00001'],
     type: [String],
   })
-  ref_code: string[];
+  ref_document_id: string[];
 }
 
 export class GetOilMovementByHeaderResponseDto {
