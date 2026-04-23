@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Patch } from '@nestjs/common';
+import { Body, Controller, Post, Patch, BadRequestException } from '@nestjs/common';
 import {
   ApiBody,
   ApiOperation,
@@ -37,9 +37,11 @@ export class OilMovementController {
   async getOilMovementsByHeader(
     @Body() body: GetOilMovementByHeaderRequestDto,
   ) {
-    return this.oilMovementService.getOilMovementsByHeader(
-      body.ref_document_id,
-    );
+    const refDocIds = body?.ref_document_id;
+    if (!Array.isArray(refDocIds) || refDocIds.length === 0) {
+      throw new BadRequestException('ref_document_id must be a non-empty array');
+    }
+    return this.oilMovementService.getOilMovementsByHeader(refDocIds);
   }
 
   @Patch('update')
@@ -53,6 +55,9 @@ export class OilMovementController {
   async updateOilMovementByHeader(
     @Body() body: ExternalHeaderOilMovementDto[],
   ) {
+    if (!Array.isArray(body) || body.length === 0) {
+      throw new BadRequestException('body must be a non-empty array');
+    }
     return this.oilMovementService.updateOilMovementByHeader(body);
   }
 
@@ -67,7 +72,11 @@ export class OilMovementController {
   @ApiBody({ type: GetOilMovementRequestDto })
   @ApiResponse({ status: 200, type: GetOilMovementResponseDto })
   async getOilMovements(@Body() body: GetOilMovementRequestDto) {
-    return this.oilMovementService.getOilMovements(body.ref_code);
+    const refCodes = body?.ref_code;
+    if (!Array.isArray(refCodes) || refCodes.length === 0) {
+      throw new BadRequestException('ref_code must be a non-empty array');
+    }
+    return this.oilMovementService.getOilMovements(refCodes);
   }
 
   @Patch('detail/update')
@@ -79,6 +88,9 @@ export class OilMovementController {
   @ApiBody({ type: [ExternalOilMovementDto] })
   @ApiResponse({ status: 200, type: UpdateOilMovementResponseDto })
   async updateOilMovement(@Body() body: ExternalOilMovementDto[]) {
+    if (!Array.isArray(body) || body.length === 0) {
+      throw new BadRequestException('body must be a non-empty array');
+    }
     return this.oilMovementService.updateOilMovement(body);
   }
 }
