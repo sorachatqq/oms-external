@@ -34,7 +34,7 @@ export class OilMovementService {
 
     const { data } = await firstValueFrom(
       this.httpService.post<GetOilMovementByHeaderResponseDto>(url, {
-        ref_document_id: refDocIds,
+        ref_code: refDocIds,
       }),
     );
 
