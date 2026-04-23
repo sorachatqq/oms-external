@@ -1,6 +1,13 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
+import { AxiosError } from 'axios';
 import {
   ExternalBatchATGDetailDto,
   ExternalBatchFlowMeterDetailDto,
@@ -32,13 +39,16 @@ export class OilMovementService {
       `POST ${url} ref_document_ids=${refDocIds.join(',')}`,
     );
 
-    const { data } = await firstValueFrom(
-      this.httpService.post<GetOilMovementByHeaderResponseDto>(url, {
-        ref_document_id: refDocIds,
-      }),
-    );
-
-    return data;
+    try {
+      const { data } = await firstValueFrom(
+        this.httpService.post<GetOilMovementByHeaderResponseDto>(url, {
+          ref_document_id: refDocIds,
+        }),
+      );
+      return data;
+    } catch (error) {
+      this.rethrowHttpError(error);
+    }
   }
 
   async updateOilMovementByHeader(
@@ -57,14 +67,17 @@ export class OilMovementService {
       `PATCH ${url} ref_document_ids=${normalized.map((p) => p.ref_document_id).join(',')}`,
     );
 
-    const { data } = await firstValueFrom(
-      this.httpService.patch<UpdateOilMovementByHeaderResponseDto>(
-        url,
-        normalized,
-      ),
-    );
-
-    return data;
+    try {
+      const { data } = await firstValueFrom(
+        this.httpService.patch<UpdateOilMovementByHeaderResponseDto>(
+          url,
+          normalized,
+        ),
+      );
+      return data;
+    } catch (error) {
+      this.rethrowHttpError(error);
+    }
   }
 
   // ─── Detail-level (by operator_ref_no) ───────────────────────────────────────
@@ -75,13 +88,16 @@ export class OilMovementService {
     const url = `${this.baseUrl}/api/oil-movements/detail/get`;
     this.logger.log(`POST ${url} ref_codes=${refCodes.join(',')}`);
 
-    const { data } = await firstValueFrom(
-      this.httpService.post<GetOilMovementResponseDto>(url, {
-        ref_code: refCodes,
-      }),
-    );
-
-    return data;
+    try {
+      const { data } = await firstValueFrom(
+        this.httpService.post<GetOilMovementResponseDto>(url, {
+          ref_code: refCodes,
+        }),
+      );
+      return data;
+    } catch (error) {
+      this.rethrowHttpError(error);
+    }
   }
 
   async updateOilMovement(
@@ -96,14 +112,17 @@ export class OilMovementService {
       `PATCH ${url} ref_codes=${normalized.map((p) => p.ref_code).join(',')}`,
     );
 
-    const { data } = await firstValueFrom(
-      this.httpService.patch<UpdateOilMovementResponseDto>(
-        url,
-        normalized,
-      ),
-    );
-
-    return data;
+    try {
+      const { data } = await firstValueFrom(
+        this.httpService.patch<UpdateOilMovementResponseDto>(
+          url,
+          normalized,
+        ),
+      );
+      return data;
+    } catch (error) {
+      this.rethrowHttpError(error);
+    }
   }
 
   // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -332,5 +351,38 @@ export class OilMovementService {
         },
       })),
     };
+  }
+
+  private rethrowHttpError(error: unknown): never {
+    if (error instanceof HttpException) {
+      throw error;
+    }
+
+    const axiosError = error as AxiosError<any>;
+    const status =
+      axiosError?.response?.status ?? HttpStatus.INTERNAL_SERVER_ERROR;
+    const responseData = axiosError?.response?.data as
+      | string
+      | { message?: string | string[]; error?: string }
+      | undefined;
+
+    let message = 'Internal server error';
+    if (typeof responseData === 'string') {
+      message = responseData;
+    } else if (Array.isArray(responseData?.message)) {
+      message = responseData.message.join('; ');
+    } else if (typeof responseData?.message === 'string') {
+      message = responseData.message;
+    } else if (typeof responseData?.error === 'string') {
+      message = responseData.error;
+    }
+
+    throw new HttpException(
+      {
+        status: 'error',
+        message,
+      },
+      status,
+    );
   }
 }
